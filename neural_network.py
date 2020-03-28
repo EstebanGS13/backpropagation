@@ -79,30 +79,31 @@ def main():
     NN = NeuralNetwork(inputs, outputs)
     NN.train()
 
+    # Plot the error over the entire training duration
+    plt.figure(figsize=(10, 5))
+    plt.plot(NN.epoch_list, NN.error_history)
+    plt.title('Error percentage during training')
+    plt.xlabel('Epoch')
+    plt.ylabel('Error')
+    plt.show(block=False)
 
-
-    while True:
+    counter = 0
+    while counter < 10:
         try:
-            test = int(input("Ingrese el digito el cual quiere que la red prediga"
+            test = int(input("Ingrese el digito el cual quiere que la red prediga\n"
                              "(este sera entregado a la red en formato de 7 segmentos): "))
             if 0 <= test <= 9:
                 segments = inputs[test]
                 prediction = NN.predict(segments)
                 expected = outputs[test]
-
-                print(f"Valor ingresado: {segments}\nValor predicho: {prediction}\nValor correcto: {expected}\n")
+                counter += 1
+                print(f"\tValor ingresado: {segments}\n\tValor predicho: {prediction}\n\tValor correcto: {expected}\n")
             else:
                 print("Debe ingresar un solo digito")
         except ValueError:
             print("Debe ingresar un digito")
             continue
 
-    # plot the error over the entire training duration
-    plt.figure(figsize=(10, 5))
-    plt.plot(NN.epoch_list, NN.error_history)
-    plt.xlabel('Epoch')
-    plt.ylabel('Error')
-    plt.show()
 
 if __name__ == "__main__":
     main()
